@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:weatherwise/app/presentation/themes/app_color.dart';
 import 'package:weatherwise/app/presentation/themes/custom_theme.dart';
+import 'package:weatherwise/app/presentation/widget/spacers.dart';
+import 'package:weatherwise/constants/layout_constants.dart';
+
+import '../../widget/greeting_text.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -19,10 +23,16 @@ class _HomePageState extends State<HomePage> {
               .backgroundGradient),
       child: Scaffold(
         backgroundColor: AppColor.transparent,
-        body: Column(
-          children: [
-            
-          ],
+        body: Container(
+          padding:
+              const EdgeInsets.symmetric(horizontal: LayoutConstants.dimen_16),
+          child: Column(
+            children: [
+              const LVSpacer(),
+              GreetingText(),
+              const LVSpacer(),
+            ],
+          ),
         ),
       ),
     );
