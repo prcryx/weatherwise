@@ -16,23 +16,18 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          gradient: Theme.of(context)
-              .extension<CustomColorTheme>()!
-              .backgroundGradient),
-      child: Scaffold(
-        backgroundColor: AppColor.transparent,
-        body: Container(
-          padding:
-              const EdgeInsets.symmetric(horizontal: LayoutConstants.dimen_16),
-          child: Column(
-            children: [
-              const LVSpacer(),
-              GreetingText(),
-              const LVSpacer(),
-            ],
-          ),
+    return Scaffold(
+      backgroundColor:
+          Theme.of(context).extension<CustomColorTheme>()!.scaffoldBackground,
+      body: Container(
+        padding:
+            const EdgeInsets.symmetric(horizontal: LayoutConstants.dimen_16),
+        child: Column(
+          children: [
+            const LVSpacer(),
+            GreetingText(),
+            const LVSpacer(),
+          ],
         ),
       ),
     );
