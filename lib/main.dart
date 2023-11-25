@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:weatherwise/app/presentation/themes/weather_theme.dart';
 import 'package:weatherwise/app/utils/datetime_format.dart';
+import 'package:weatherwise/di/injector_config.dart';
 
 import 'app/presentation/screens/home/home_page.dart';
 import 'app/presentation/themes/custom_theme.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+  InjectorConfig.setUp();
   runApp(const MyApp());
 }
 
