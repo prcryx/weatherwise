@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weatherwise/app/presentation/themes/weather_theme.dart';
 import 'package:weatherwise/app/utils/datetime_format.dart';
-import 'package:weatherwise/constants/app_constants.dart';
 
 import 'app/presentation/screens/home/home_page.dart';
 import 'app/presentation/themes/custom_theme.dart';
