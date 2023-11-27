@@ -9,6 +9,7 @@ class HomeRepository {
     String reqStr =
         "?&current=temperature_2m&daily=weathercode,temperature_2m_max,temperature_2m_min,sunrise,sunset&timezone=auto&${request.toUriString()}";
     final response = await _client.get(reqStr);
+    print(response);
     return WeatherReport.fromJsonWithConstLatitude(
         response, request.lat, request.long);
   }

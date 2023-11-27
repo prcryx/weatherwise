@@ -3,8 +3,8 @@ import 'package:weatherwise/app/utils/datetime_format.dart';
 import '../../../constants/app_constants.dart';
 
 class WeatherReport {
-  double latitude = 0.0;
-  double longitude = 0.0;
+  double? latitude;
+  double? longitude;
   double? generationtimeMs;
   int? utcOffsetSeconds;
   String? timezone;
@@ -30,7 +30,7 @@ class WeatherReport {
   });
 
   WeatherReport.fromJsonWithConstLatitude(
-      Map<String, dynamic> json, double latitude, double longitude) {
+      Map<String, dynamic> json, double lat, double long) {
     latitude = json['latitude'] ?? latitude;
     longitude = json['longitude'] ?? longitude;
     generationtimeMs = json['generationtime_ms'];
@@ -48,6 +48,22 @@ class WeatherReport {
         : null;
     daily = json['daily'] != null ? Daily.fromJson(json['daily']) : null;
   }
+
+  String toString() {
+    return '''
+      Latitude: $latitude
+      Longitude: $longitude
+      Generation Time (ms): $generationtimeMs
+      UTC Offset (seconds): $utcOffsetSeconds
+      Timezone: $timezone
+      Timezone Abbreviation: $timezoneAbbreviation
+      Elevation: $elevation
+      Current Units: ${currentUnits.toString()}
+      Current Data: $current
+      Daily Units: $dailyUnits
+      Daily Data: \n\t${daily.toString()}
+    ''';
+  }
 }
 
 class CurrentUnits {
@@ -62,6 +78,15 @@ class CurrentUnits {
     interval = json['interval'];
     temperature2m = json['temperature_2m'];
   }
+
+  @override
+  String toString() {
+    return '''
+      time : $time,
+      interval: $interval,
+      tempurature2m: $temperature2m,
+    ''';
+  }
 }
 
 class Current {
@@ -75,6 +100,15 @@ class Current {
     time = json['time'];
     interval = json['interval'];
     temperature2m = json['temperature_2m'];
+  }
+
+  @override
+  String toString() {
+    return '''
+      time : $time,
+      interval: $interval,
+      tempurature2m: $temperature2m,
+    ''';
   }
 }
 
@@ -102,6 +136,18 @@ class DailyUnits {
     sunrise = json['sunrise'];
     sunset = json['sunset'];
   }
+
+  @override
+  String toString() {
+    return '''
+      time : $time,
+      weathercode: $weathercode,
+      temperature2mMax: $temperature2mMax,
+      temperature2mMin: $temperature2mMin,
+      sunrise: $sunrise,
+      sunset: $sunset,
+    ''';
+  }
 }
 
 class Daily {
@@ -128,6 +174,18 @@ class Daily {
     temperature2mMin = json['temperature_2m_min'].cast<double>();
     sunrise = json['sunrise'].cast<String>();
     sunset = json['sunset'].cast<String>();
+  }
+
+  @override
+  String toString() {
+    return '''
+      time : $time,
+      weathercode: $weathercode,
+      temperature2mMax: $temperature2mMax,
+      temperature2mMin: $temperature2mMin,
+      sunrise: $sunrise,
+      sunset: $sunset,
+    ''';
   }
 }
 
@@ -160,7 +218,8 @@ class TodayWeatherReport {
     this.loc,
   });
 
-  static get empty => TodayWeatherReport();
+  static get empty =>
+      TodayWeatherReport(weatherCode: AppConstants.unknownWeatherCode);
 }
 
 extension WeatherReportExtensions on WeatherReport? {
@@ -182,6 +241,7 @@ extension WeatherReportExtensions on WeatherReport? {
 
   TodayWeatherReport getTodayWeatherReport() {
     int index = getTodayIndex();
+    print("weatherIndex: $index");
     if (index != AppConstants.invalidIndex) {
       // return this!.daily!.weathercode![index];
       return TodayWeatherReport(
@@ -193,8 +253,8 @@ extension WeatherReportExtensions on WeatherReport? {
         tempNowUnit: this!.currentUnits!.temperature2m,
         weatherCode: this!.daily!.weathercode![index],
         loc: Coordinates(
-          lat: this!.latitude,
-          long: this!.longitude,
+          lat: this!.latitude!,
+          long: this!.longitude!,
         ),
       );
     }

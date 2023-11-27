@@ -14,6 +14,7 @@ class HomeCubit extends Cubit<HomeState> {
       WeatherReportRequest req =
           const WeatherReportRequest(lat: 23.83, long: 91.28, pastDays: 3);
       final res = await _repo.getWeatherReport(req);
+      print("From cubit: $res");
       emit(WeatherReportFetchSuccessState(res));
     } catch (e) {
       emit(WeatherReportFetchFailedState());

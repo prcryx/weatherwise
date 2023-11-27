@@ -19,6 +19,10 @@ class AppColor {
   static const copper300 = Color(0xFFFF8B3D);
 
   static const snowDrift = Color(0xFFFAFAFA);
+  static const raven = Color(0xFF191919);
 
+  static const shadow = Color(0x01090B0E);
+
+  static const white = Color(0xFFFFFFFF);
   static const transparent = Color(0x00000000);
 }
