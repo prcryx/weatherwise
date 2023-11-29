@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:weatherwise/app/utils/datetime_format.dart';
+import 'package:weatherwise/app/utils/datetime_utils.dart';
 
 import '../../../constants/layout_constants.dart';
 import '../themes/app_color.dart';

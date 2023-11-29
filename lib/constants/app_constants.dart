@@ -5,4 +5,5 @@ class AppConstants {
   static const invalidIndex = -1;
   static const unknownWeatherCode = -999;
   static const degreeUnicode = "\u00B0";
+  static const forcastTitle = "Forecasts";
 }

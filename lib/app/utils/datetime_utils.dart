@@ -28,4 +28,25 @@ extension DateTimeExtensions on DateTime {
       return DayInterval.night;
     }
   }
+
+  bool passHourThreshold(int threshold) {
+    final hour = this.hour;
+
+    if (0 <= hour && hour < threshold) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  bool passCurrentTime() {
+    final dateTime = this;
+    final now = DateTime.now();
+
+    if (dateTime.isBefore(now)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

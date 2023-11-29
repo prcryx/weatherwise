@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:weatherwise/app/presentation/themes/weather_theme.dart';
-import 'package:weatherwise/app/utils/datetime_format.dart';
+import 'package:weatherwise/app/utils/datetime_utils.dart';
 import 'package:weatherwise/di/injector_config.dart';
 
 import 'app/presentation/screens/home/home_page.dart';
 import 'app/presentation/themes/custom_theme.dart';
+import 'app/utils/scroll_behavior.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,7 +32,10 @@ class _MyAppState extends State<MyApp> {
         weatherTheme,
       ]),
       themeMode: ThemeMode.light,
-      builder: (context, child) => _appBuilder(context),
+      builder: (context, child) => ScrollConfiguration(
+        behavior: MyBehavior(),
+        child: _appBuilder(context),
+      ),
     );
   }
 }

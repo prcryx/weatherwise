@@ -22,6 +22,28 @@ class WeatherCodeStringConstants {
   static const unknown = "";
 }
 
+class WeatherCondTitleExpression {
+  const WeatherCondTitleExpression._();
+  static const clearSky = "Bright Sunny Skies";
+  static const overcast = "Overcast Skies"; // Today Brings a Cloudy Canvas
+  static const foggy = "Mystical Foggy Ambiance";
+  static const rainy = "Refreshing Rainfall Showers";
+  static const snowy = "Snowy Splendor";
+  static const rainyThunderstrom = "Thunderous Storm Showers";
+  static const unknown = "";
+}
+
+class WeatherCondSubtitleTitleExpression {
+  const WeatherCondSubtitleTitleExpression._();
+  static const clearSky = "Anticipate another perfect sunny day";
+  static const overcast = "Brings a cloudy canvas and cozy indoor vibes";
+  static const foggy = "Serene atmosphere for quiet moments indoors";
+  static const rainy = "Enjoy the soothing sound of raindrops indoors";
+  static const snowy = "Awaits magical wonderland for outdoor activities";
+  static const rainyThunderstrom = "Enjoy, but stay indoors and be cautious";
+  static const unknown = "";
+}
+
 extension WeatherCodeEnumExtension on int? {
   WeatherCode toWeatherCodeEnum() {
     if (this == null) {
@@ -123,6 +145,44 @@ extension WeatherCodeUtilExtension on WeatherCode? {
         return WeatherCodeStringConstants.rainyThunderstrom;
       default:
         return WeatherCodeStringConstants.unknown;
+    }
+  }
+
+  String get toWeatherCondTitleExpression {
+    switch (this) {
+      case WeatherCode.clearSky:
+        return WeatherCondTitleExpression.clearSky;
+      case WeatherCode.overcast:
+        return WeatherCondTitleExpression.overcast;
+      case WeatherCode.foggy:
+        return WeatherCondTitleExpression.foggy;
+      case WeatherCode.snowy:
+        return WeatherCondTitleExpression.snowy;
+      case WeatherCode.rainy:
+        return WeatherCondTitleExpression.rainy;
+      case WeatherCode.rainyThunderstrom:
+        return WeatherCondTitleExpression.rainyThunderstrom;
+      default:
+        return WeatherCondTitleExpression.unknown;
+    }
+  }
+
+  String get toWeatherCondSubtitleExpression {
+    switch (this) {
+      case WeatherCode.clearSky:
+        return WeatherCondSubtitleTitleExpression.clearSky;
+      case WeatherCode.overcast:
+        return WeatherCondSubtitleTitleExpression.overcast;
+      case WeatherCode.foggy:
+        return WeatherCondSubtitleTitleExpression.foggy;
+      case WeatherCode.snowy:
+        return WeatherCondSubtitleTitleExpression.snowy;
+      case WeatherCode.rainy:
+        return WeatherCondSubtitleTitleExpression.rainy;
+      case WeatherCode.rainyThunderstrom:
+        return WeatherCondSubtitleTitleExpression.rainyThunderstrom;
+      default:
+        return WeatherCondSubtitleTitleExpression.unknown;
     }
   }
 }

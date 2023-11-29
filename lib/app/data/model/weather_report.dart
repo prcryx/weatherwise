@@ -1,7 +1,3 @@
-import 'package:weatherwise/app/utils/datetime_format.dart';
-
-import '../../../constants/app_constants.dart';
-
 class WeatherReport {
   double? latitude;
   double? longitude;
@@ -49,6 +45,7 @@ class WeatherReport {
     daily = json['daily'] != null ? Daily.fromJson(json['daily']) : null;
   }
 
+  @override
   String toString() {
     return '''
       Latitude: $latitude
@@ -186,78 +183,5 @@ class Daily {
       sunrise: $sunrise,
       sunset: $sunset,
     ''';
-  }
-}
-
-class Coordinates {
-  double lat;
-  double long;
-  Coordinates({required this.lat, required this.long});
-}
-
-class TodayWeatherReport {
-  int? tempNow;
-  double? tempMax;
-  double? tempMin;
-  DateTime? timeNow;
-  String? tempNowUnit;
-  String? tempMaxUnit;
-  String? tempMinUnit;
-  int? weatherCode;
-  Coordinates? loc;
-
-  TodayWeatherReport({
-    this.tempNow,
-    this.tempMax,
-    this.tempMin,
-    this.timeNow,
-    this.tempNowUnit,
-    this.tempMaxUnit,
-    this.tempMinUnit,
-    this.weatherCode,
-    this.loc,
-  });
-
-  static get empty =>
-      TodayWeatherReport(weatherCode: AppConstants.unknownWeatherCode);
-}
-
-extension WeatherReportExtensions on WeatherReport? {
-  int getTodayIndex() {
-    if (this == null) {
-      return AppConstants.invalidIndex;
-    } else {
-      if (this!.daily != null) {
-        int index = 0;
-        DateTime now = DateTime.now();
-        if (this!.daily!.time != null) {
-          index = this!.daily!.time!.indexOf(now.toyyyyMMddWithDashSeperator);
-          return index;
-        }
-      }
-    }
-    return AppConstants.invalidIndex;
-  }
-
-  TodayWeatherReport getTodayWeatherReport() {
-    int index = getTodayIndex();
-    print("weatherIndex: $index");
-    if (index != AppConstants.invalidIndex) {
-      // return this!.daily!.weathercode![index];
-      return TodayWeatherReport(
-        tempNow: this!.current?.temperature2m?.round(),
-        tempMax: this!.daily!.temperature2mMax![index],
-        tempMin: this!.daily!.temperature2mMin![index],
-        tempMaxUnit: this!.dailyUnits!.temperature2mMax,
-        tempMinUnit: this!.dailyUnits!.temperature2mMin,
-        tempNowUnit: this!.currentUnits!.temperature2m,
-        weatherCode: this!.daily!.weathercode![index],
-        loc: Coordinates(
-          lat: this!.latitude!,
-          long: this!.longitude!,
-        ),
-      );
-    }
-    return TodayWeatherReport.empty;
   }
 }

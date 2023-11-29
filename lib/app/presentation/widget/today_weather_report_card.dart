@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:weather_icons/weather_icons.dart';
 import 'package:weatherwise/app/presentation/themes/custom_theme.dart';
 import 'package:weatherwise/app/presentation/widget/spacers.dart';
-import 'package:weatherwise/app/utils/datetime_format.dart';
+import 'package:weatherwise/app/utils/datetime_utils.dart';
 import 'package:weatherwise/app/utils/weather_code_formatter.dart';
 
 import '../../../constants/app_constants.dart';
 import '../../../constants/layout_constants.dart';
-import '../../data/model/weather_report.dart';
+import '../../data/model/detail_weather_report.dart';
 import '../../utils/ttl_utils.dart';
 import 'primary_container.dart';
 
@@ -33,7 +33,7 @@ class _TodayWeatherReportCardState extends State<TodayWeatherReportCard> {
   @override
   void initState() {
     super.initState();
-    weatherCode = widget.todayWeatherReport!.weatherCode!.toWeatherCodeEnum();
+    weatherCode = widget.todayWeatherReport!.weatherCode;
     DateTime now = DateTime.now();
     _timeString = now.toHHmm;
     _timePeriod = now.toPeriod;
@@ -64,7 +64,7 @@ class _TodayWeatherReportCardState extends State<TodayWeatherReportCard> {
 
   @override
   void didUpdateWidget(covariant TodayWeatherReportCard oldWidget) {
-    weatherCode = widget.todayWeatherReport!.weatherCode!.toWeatherCodeEnum();
+    weatherCode = widget.todayWeatherReport!.weatherCode;
     super.didUpdateWidget(oldWidget);
   }
 
@@ -188,24 +188,31 @@ class _TodayWeatherReportCardState extends State<TodayWeatherReportCard> {
 
   Row _footer(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          "Max: ${widget.todayWeatherReport?.tempMax ?? 0}${AppConstants.degreeUnicode}",
-          style: TextStyle(
-            color: Theme.of(context)
-                .extension<CustomColorTheme>()!
-                .primaryTextColor,
+        const Spacer(),
+        RichText(
+            text: TextSpan(children: [
+          TextSpan(
+            text:
+                "High: ${widget.todayWeatherReport?.tempRange?.max.round() ?? 0}${AppConstants.degreeUnicode}",
+            style: TextStyle(
+              color: Theme.of(context)
+                  .extension<CustomColorTheme>()!
+                  .primaryTextColor,
+            ),
           ),
-        ),
-        const XSHSpacer(),
-        Text(
-          "Min: ${widget.todayWeatherReport?.tempMin ?? 0}${AppConstants.degreeUnicode}",
-          style: TextStyle(
-            color: Theme.of(context)
-                .extension<CustomColorTheme>()!
-                .primaryTextColor,
-          ),
-        )
+          TextSeperators.textSpanPipe(2),
+          TextSpan(
+            text:
+                "Low: ${widget.todayWeatherReport?.tempRange?.min.round() ?? 0}${AppConstants.degreeUnicode}",
+            style: TextStyle(
+              color: Theme.of(context)
+                  .extension<CustomColorTheme>()!
+                  .primaryTextColor,
+            ),
+          )
+        ])),
       ],
     );
   }
@@ -265,26 +272,21 @@ class _TodayWeatherReportCardState extends State<TodayWeatherReportCard> {
     });
   }
 
-  ShapeDecoration todayCardShape(context, {bool defineArea = true}) {
+  ShapeDecoration todayCardShape(
+    context,
+  ) {
     return ShapeDecoration(
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(LayoutConstants.dimen_16),
-          side: defineArea
-              ? BorderSide(
-                  color: Theme.of(context)
-                      .extension<CustomColorTheme>()!
-                      .primaryCardBorderColor!)
-              : BorderSide.none),
-      color: defineArea
-          ? Theme.of(context).extension<CustomColorTheme>()!.todayWeatherCardBg
-          : Theme.of(context).extension<CustomColorTheme>()!.scaffoldBackground,
-      shadows: !defineArea
-          ? [
-              Theme.of(context)
+          side: BorderSide(
+              color: Theme.of(context)
                   .extension<CustomColorTheme>()!
-                  .primaryCardBoxShadow!
-            ]
-          : null,
+                  .primaryCardBorderColor!)),
+      color:
+          Theme.of(context).extension<CustomColorTheme>()!.todayWeatherCardBg,
+      shadows: [
+        Theme.of(context).extension<CustomColorTheme>()!.primaryCardBoxShadow!
+      ],
     );
   }
 }

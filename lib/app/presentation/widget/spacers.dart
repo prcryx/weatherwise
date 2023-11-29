@@ -89,3 +89,19 @@ class XSHSpacer extends StatelessWidget {
     );
   }
 }
+
+class TextSeperators {
+  static TextSpan textSpanSpacer(int unit) {
+    return TextSpan(
+      text: " " * unit,
+    );
+  }
+
+  static TextSpan textSpanPipe(int spacers) {
+    return TextSpan(children: [
+      textSpanSpacer(spacers),
+      const TextSpan(text: "|"),
+      textSpanSpacer(spacers),
+    ]);
+  }
+}
